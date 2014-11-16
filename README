@@ -1,0 +1,41 @@
+                        NMusicPD library
+                        ================
+ 
+        NMusicPD is a CLR-compliant library used for comunicating with a
+MusicPD server written in C#.
+
+COMPILING AND INSTALLING
+========================
+
+        For compiling NMusicPD, you'll need:
+    - A .NET and C# compliant compiler. (Mono >= 1.0 recommended)
+    - NAnt for the building process. (go get it on http://nant.sf.net/)
+
+        Go to the toplevel directory, where a file named "NMusicPD.build" is
+located, and do:
+ $ nant rebuild
+
+        If you're too lazy to get NAnt, you can *try* using build.py, a
+simpler builder:
+ $ python build.py 
+
+        Then, as root, install the library in the Global Assembly Cache. This
+can be done executing:
+ # gacutil -i NMusicPD.dll 
+
+   NOTE FOR USERS: You just need this library if you are going to use some
+   program that requires it.  If this is your case, you don't need to read
+   further.
+
+
+VERSIONING AND KEY SIGNING
+==========================
+
+        Currently the strong name of the library is used just for making GAC
+happy.  Don't trust it.  Also, the versioning scheme doesn't follow mpd scheme.
+
+
+DOCUMENTATION AND API
+=====================
+
+        Sorry, for now you'll have to browse the sources.

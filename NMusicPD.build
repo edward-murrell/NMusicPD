@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<project name="NMusicPD" default="build">
+    <property name="debug" value="true"/>
+
+    <target name="clean" description="remove all generated files">
+        <delete file="NMusicPD.dll" if="${file::exists('NMusicPD.dll')}" />
+        <delete file="UnitTest.exe" if="${file::exists('UnitTest.exe')}" />
+    </target>
+
+    <target name="build" description="compiles the source code">
+        <csc target="library" output="NMusicPD.dll" debug="${debug}">
+            <sources>
+                <include name="src/nmusicpd/*.cs" />
+            </sources>
+        </csc>
+    </target>
+    
+    <target name="rebuild" depends="clean,build" description="force recompiling the source code" />
+
+    <target name="build-unittest" depends="build" description="compiles the UnitTest testing program" >
+        <csc target="exe" output="UnitTest.exe" debug="${debug}">
+            <sources>
+                <include name="unittest/*.cs" />
+            </sources>
+            <references>
+                <include name="NMusicPD.dll" />
+            </references>
+        </csc>
+    </target>
+
+    <target name="run" depends="build-unittest" description="builds NMusicPD and test it using UnitTest" >
+        <exec program="UnitTest.exe" />
+    </target>
+    
+    <target name="release" depends="rebuild" description="rebuilds the source and packages everything">
+        <property name="debug" value="false"/>
+        <zip zipfile="../NMusicPD-${assembly::get-version('NMusicPD.dll')}.zip">
+            <fileset>
+                <include name="NMusicPD.build" />
+                <include name="NMusicPD.dll" />
+                <include name="LICENSE" />
+                <include name="README" />
+                <include name="src/nmusicpd/*.cs" />
+                <include name="unittest/*.cs" />
+            </fileset>
+        </zip>
+    </target>
+</project>
