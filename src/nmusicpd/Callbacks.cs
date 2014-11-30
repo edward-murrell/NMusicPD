@@ -27,6 +27,7 @@ namespace MPD
 		public InternalCallback StatsInfoCallback;
 		public InternalCallback StatusInfoCallback;
 		public InternalCallback StringListCallback;
+		public InternalCallback IdleInfoCallback;
 		
 		private object ProcessMusicCollectionPerFile(string buffer) {
 			return new MusicCollection(Functions.GetItemlistFromBuffer(buffer, "file", false));
@@ -59,7 +60,13 @@ namespace MPD
 		private object ProcessStringList(string buffer) {
 			return Functions.GetStringListFromBuffer(buffer);
 		}
-	
+
+		private object ProcessIdleInfo(string buffer) {
+			// Not even sure if this is the right way of doing this!
+			return new IdleInfo(Functions.GetHashtableFromBuffer(buffer));
+		}
+
+
 		public Callbacks() {
 			MusicCollectionPerFileCallback = new 
 				InternalCallback(ProcessMusicCollectionPerFile);
@@ -71,6 +78,7 @@ namespace MPD
 			StatsInfoCallback = new InternalCallback(ProcessStatsInfo);
 			StatusInfoCallback = new InternalCallback(ProcessStatusInfo);
 			StringListCallback = new InternalCallback(ProcessStringList);
+			IdleInfoCallback = new InternalCallback(ProcessIdleInfo);
 		}
 	}
 }

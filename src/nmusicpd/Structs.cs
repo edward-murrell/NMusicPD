@@ -69,6 +69,14 @@ namespace MPD
 		Pause,
 		Stop
 	}
+
+	public enum IdleStatus {
+		Player,
+		Mixer,
+		Unknown
+	}
+
+
 	
 	public sealed class MusicStatus
 	{
@@ -214,6 +222,26 @@ namespace MPD
 			for (int i = 0; i < count; i++) {
 				Hashtable song = (Hashtable)songs[i];
 				Songs[i] = new MusicInfo(song, Convert.ToInt32(song["INDEX"]));
+			}
+		}
+	}
+
+	// Blatently ripping off StatusInfo - only want one field though
+	public sealed class IdleInfo
+	{
+		public IdleStatus ChangedState;
+
+		public IdleInfo(Hashtable info) {
+			switch ((string)info["changed"]) {
+				case "player":
+				ChangedState = IdleStatus.Player;
+				break;
+				case "mixer":
+				ChangedState = IdleStatus.Mixer;
+				break;
+				default:
+				ChangedState = IdleStatus.Unknown;
+				break;
 			}
 		}
 	}

@@ -428,7 +428,12 @@ namespace MPD {
 		public void Swap(int id1, int id2) {
 			SendCommand("swapid " + Convert.ToString(id1) + " " + Convert.ToString(id2));
 		}
-		
+
+		// Send idle command and block on response
+		public void Idle(CommandCallback callback) {
+			SendCommand("idle", callbacks.IdleInfoCallback, callback);
+		}
+
 		// Get/set volume value
 		public void Volume(int Value) {
 			if (Value < 0 || Value > 100)
