@@ -431,6 +431,10 @@ namespace MPD {
 
 		// Send idle command and block on response
 		public void Idle(CommandCallback callback) {
+			if (SendBufferToServer ()) {
+				do {
+				} while (ReadResponse ());
+			}
 			SendCommand("idle", callbacks.IdleInfoCallback, callback);
 			// Go to blocking Read Response.
 			ReadResponse ();
