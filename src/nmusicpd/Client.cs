@@ -432,6 +432,8 @@ namespace MPD {
 		// Send idle command and block on response
 		public void Idle(CommandCallback callback) {
 			SendCommand("idle", callbacks.IdleInfoCallback, callback);
+			// Go to blocking Read Response.
+			ReadResponse ();
 		}
 
 		// Get/set volume value

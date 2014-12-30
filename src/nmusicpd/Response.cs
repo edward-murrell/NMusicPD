@@ -126,6 +126,9 @@ namespace MPD {
 		
 		// Tests if the final "OK" on block of commands has arrived
 		private bool TestFinalReached(string buffer) {
+			// Bail out if the string is blank (possibly in last?)
+			if (buffer == "")
+				return false;
 			string lastLine = Functions.LastLine(buffer);
 			if (lastLine.StartsWith("OK")) {
 				bigBuffer.Remove(0, bigBuffer.Length);
