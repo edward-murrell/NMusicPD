@@ -101,8 +101,13 @@ namespace MPD
 			if (info.ContainsKey("audio")) {
 				BitRate = Convert.ToInt32((string)info["bitrate"]);
 				string[] temp = ((string)info["audio"]).Split(':');
-				SampleRate = Convert.ToUInt32(temp[0]); 
-				Bits = Convert.ToInt32(temp[1]); 
+				SampleRate = Convert.ToUInt32(temp[0]);
+				// Sometimes Bits is not return properly.
+				try {
+					Bits = Convert.ToInt32(temp[1]);
+				} catch {
+					Bits = 0;
+				}
 				Channels = Convert.ToInt32(temp[2]);
 				
 				temp = ((string)info["time"]).Split(':');
